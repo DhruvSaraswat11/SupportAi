@@ -113,7 +113,7 @@ align-items : center ;
 
     const input = document.querySelector("#chat-input")
     const senDButton = document.querySelector("#chat-send")
-    const messageArea = document.querySelector("#chatmessages ")
+    const messageArea = document.querySelector("#chatmessages")
 
   function addMessage ( text , from ) {
     const bubble  = document.createElement('div')

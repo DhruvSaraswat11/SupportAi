@@ -1,4 +1,9 @@
 # 🤖 SupportAI
+![Next.js](https://img.shields.io/badge/Next.js-15-black)
+![MongoDB](https://img.shields.io/badge/MongoDB-Green)
+![Gemini AI](https://img.shields.io/badge/Gemini-AI-blue)
+![License](https://img.shields.io/badge/License-MIT-green)
+
 SupportAI is a plug-and-play AI customer support widget that can be embedded into any website using a single script tag. Businesses can configure their own knowledge base, and the chatbot responds using Google Gemini AI, eliminating the need to build a support system from scratch.
 
 SupportAI is an embeddable AI-powered customer support chatbot that allows businesses to add an AI assistant to their website using just a single script tag.

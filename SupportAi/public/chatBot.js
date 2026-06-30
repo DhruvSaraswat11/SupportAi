@@ -2,7 +2,7 @@
 // immediatly invoked function
 (function () {
 
-    const api_Url = " https://supportai-sand.vercel.app/api/chat "
+    const api_Url = "https://supportai-sand.vercel.app/api/chat"
     const scriptTag = document.currentScript
 
     const ownerId = scriptTag.getAttribute("data-owner-id")

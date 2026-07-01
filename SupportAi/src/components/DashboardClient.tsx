@@ -68,8 +68,8 @@ export default function DashboardClient({ ownerId }: { ownerId: string | undefin
       >
         <div className=' max-w-7xl mx-auto px-6 h-16 flex
         justify-between  items-center'>
-          <button onClick={ Embed } className='text-lg cursor-pointer font-semibold tracking-tight' >support<span className='text-zinc-400'>Ai</span></button>
-          <button onClick={ () => Router.push('/embed')}
+          <button onClick={ () => Router. push('/') } className='text-lg cursor-pointer font-semibold tracking-tight' >support<span className='text-zinc-400'>Ai</span></button>
+          <button onClick={ Embed }
           className=' px-4 py-2 rounded-lg border cursor-pointer border-zinc-300 text-sm hover:bg-zinc-100 transition '
           >Embed Chatbot</button>
         </div>

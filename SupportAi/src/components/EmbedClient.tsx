@@ -1,104 +1,237 @@
+
 "use client"
 import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
 import { motion } from 'motion/react'
 
 function EmbedClient({ ownerId }: { ownerId: string }) {
-    const Router = useRouter()
-    const [ copied , setCopied ] =  useState(false)
-    const embedCode = ` <script src="${process.env.NEXT_PUBLIC_URL}/chatBot.js"
-     data-owner-id ="${ownerId}">
-   </script> `
-    const CopyCode = () => {
-      navigator.clipboard.writeText( embedCode  )
-      setCopied(true) 
-      setTimeout( () => {
-        setCopied( false )
-      } , 2000 )
-    }
-    return (
-        <div className=' min-h-screen bg-zinc-50 text-zinc-900 '>
-            <div className='sticky top-0 z-40 bg-white border-b border-zinc-200'>
-                <div className=' max-w-7xl mx-auto px-6 h-16 flex items-center justify-between ' >
-                    <div onClick={() => Router.push('/')} className=' text-lg font-semibold cursor-pointer ' > Support<span className='text-zinc-400 '>Ai</span> </div>
+  const Router = useRouter()
+  const [copied, setCopied] = useState(false)
 
-                    <button onClick={() => Router.push('/dashboard')}
-                        className=' px-4 py-2 rounded-lg border border-zinc-300 cursor-pointer
-                        text-sm  hover:bg-zinc-100 transition
-                '
-                    > Back to Dashboard </button>
-                </div>
-            </div>
+  const embedCode = `<script src="${process.env.NEXT_PUBLIC_URL}/chatbot.js"
+  data-owner-id="${ownerId}">
+</script>`
 
-           <div className=' flex justify-center px-4 py-14 ' >
-            <motion.div
-             initial = {{ opacity:0 , y:24 }}
-             animate = {{ opacity:1 , y:0 }}
-             transition={{ duration:0.5 }}
-             className=' w-full max-w-4xl bg-white rounded-2xl shadow-xl p-10 '
+  const CopyCode = () => {
+    navigator.clipboard.writeText(embedCode)
+    setCopied(true)
+    setTimeout(() => setCopied(false), 2000)
+  }
+
+  const steps = [
+    { title: 'Copy the snippet', body: 'Grab the script tag above — it already has your owner ID baked in.' },
+    { title: 'Paste before </body>', body: 'Drop it near the end of your HTML, on every page you want the widget on.' },
+    { title: 'Reload your site', body: 'The launcher appears in the bottom-right corner within a few seconds.' },
+  ]
+
+  return (
+    <div className="min-h-screen" style={{ background: '#FAF8F3', color: '#1C1B1A' }}>
+      {/* Header */}
+      <div className="sticky top-0 z-40 backdrop-blur-sm" style={{ background: '#FAF8F3ee', borderBottom: '1px solid #E8E3D8' }}>
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 h-14 sm:h-16 flex items-center justify-between">
+          <div
+            onClick={() => Router.push('/')}
+            className="text-base sm:text-lg font-semibold cursor-pointer tracking-tight"
+          >
+            Support<span className=' text-zinc-300 ' >Ai</span>
+          </div>
+          <button
+            onClick={() => Router.push('/dashboard')}
+            className="px-3 sm:px-4 py-2 rounded-lg text-xs sm:text-sm font-medium cursor-pointer transition"
+            style={{ border: '1px solid #E8E3D8' }}
+            onMouseEnter={(e) => (e.currentTarget.style.background = '#EAF3EC')}
+            onMouseLeave={(e) => (e.currentTarget.style.background = 'transparent')}
+          >
+            Back to dashboard
+          </button>
+        </div>
+      </div>
+
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-10 sm:py-16">
+        {/* Hero */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="mb-10 sm:mb-14 max-w-2xl"
+        >
+          <span
+            className="inline-block text-[11px] sm:text-xs font-semibold tracking-wide uppercase px-2.5 py-1 rounded-full mb-4"
+            style={{ background: '#EAF3EC', color: '#2D6A4F' }}
+          >
+            Website chatbot
+          </span>
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-semibold tracking-tight mb-3 leading-tight">
+            Embed your chatbot in three steps
+          </h1>
+          <p className="text-sm sm:text-base" style={{ color: '#8A8578' }}>
+            One script tag connects your site to this assistant. No build step, no dependencies — just paste and reload.
+          </p>
+        </motion.div>
+
+        {/* Two-column layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-[1.05fr_1fr] gap-8 lg:gap-10">
+          {/* Left: code + steps */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+          >
+            {/* Code block */}
+            <div
+              className="relative rounded-xl p-4 sm:p-5 mb-4 font-mono text-xs sm:text-sm overflow-hidden"
+              style={{ background: '#1C1B1A', color: '#F4F1EA' }}
             >
-                <h1 className=' text-2xl font-semibold mb-2 ' > Embed ChatBot </h1>
-                <p> Copy and paste this code before <code>&lt;/body&gt;</code></p>
-                <div
-                className=' relative bg-zinc-900 text-zinc-100 roundned-xl p-5 text-sm font-mono mb-10'
-                >
-                <pre className='overflow-x-auto'>{ embedCode }</pre>
-                <button onClick={ CopyCode }
-                className=' absolute top-3 right-3 bg-white text-zinc-900 text-xs font-medium px-3 py-1.5 rounded-lg hover:bg-zinc-200 transition cursor-pointer'
-                disabled = { copied }
-                >
-                  { copied ?  " Copied ✅ " : "Copy"   }
-                </button>
+              <div className="flex items-center gap-1.5 mb-3">
+                <span className="w-2.5 h-2.5 rounded-full" style={{ background: '#EF6B5A' }} />
+                <span className="w-2.5 h-2.5 rounded-full" style={{ background: '#F0C351' }} />
+                <span className="w-2.5 h-2.5 rounded-full" style={{ background: '#5FAE7F' }} />
+              </div>
+              <pre className="overflow-x-auto pr-2 leading-relaxed whitespace-pre-wrap sm:whitespace-pre break-words">
+                {embedCode}
+              </pre>
+              <button
+                onClick={CopyCode}
+                disabled={copied}
+                className="absolute top-4 right-4 text-xs font-medium px-3 py-1.5 rounded-lg cursor-pointer transition whitespace-nowrap"
+                style={{
+                  background: copied ? '#2D6A4F' : '#F4F1EA',
+                  color: copied ? '#F4F1EA' : '#1C1B1A',
+                }}
+              >
+                {copied ? 'Copied ✓' : 'Copy'}
+              </button>
+            </div>
+            <p className="text-xs sm:text-sm mb-8 sm:mb-10" style={{ color: '#8A8578' }}>
+              Paste this right before the closing <code className="px-1 py-0.5 rounded" style={{ background: '#EAF3EC' }}>&lt;/body&gt;</code> tag.
+            </p>
+
+            {/* Steps timeline */}
+            <div className="relative pl-2">
+              {steps.map((step, i) => (
+                <div key={step.title} className="relative flex gap-4 pb-8 last:pb-0">
+                  {i < steps.length - 1 && (
+                    <span
+                      className="absolute left-[15px] top-8 bottom-0 w-px"
+                      style={{ background: '#E8E3D8' }}
+                    />
+                  )}
+                  <div
+                    className="relative z-10 flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-xs font-semibold"
+                    style={{ background: '#1C1B1A', color: '#F4F1EA' }}
+                  >
+                    {i + 1}
+                  </div>
+                  <div className="pt-0.5">
+                    <h3 className="text-sm font-semibold mb-1">{step.title}</h3>
+                    <p className="text-xs sm:text-sm" style={{ color: '#8A8578' }}>{step.body}</p>
+                  </div>
                 </div>
-                <ol className=' space-y-3 text-sm text-zinc-600 list-decimal list-inside '>
-                  <li> Copy the embed script </li>
-                  <li> Paste it before the closing body tag </li>
-                  <li> Reload the website </li>
-                </ol>
+              ))}
+            </div>
+          </motion.div>
+
+          {/* Right: live preview */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+          >
+            <h2 className="text-sm font-semibold mb-1">Live preview</h2>
+            <p className="text-xs sm:text-sm mb-4" style={{ color: '#8A8578' }}>
+              A rough idea of how the widget sits on your page.
+            </p>
+
+            <div
+              className="rounded-xl overflow-hidden shadow-sm"
+              style={{ border: '1px solid #E8E3D8', background: '#fff' }}
+            >
+              {/* Browser chrome */}
+              <div className="flex items-center gap-2 px-3 sm:px-4 h-10" style={{ background: '#F4F1EA', borderBottom: '1px solid #E8E3D8' }}>
+                <span className="w-2 h-2 rounded-full" style={{ background: '#EF6B5A' }} />
+                <span className="w-2 h-2 rounded-full" style={{ background: '#F0C351' }} />
+                <span className="w-2 h-2 rounded-full" style={{ background: '#5FAE7F' }} />
                 <div
-                className='mt-14'
+                  className="ml-2 flex-1 h-6 rounded-md text-[11px] flex items-center px-2 truncate"
+                  style={{ background: '#fff', border: '1px solid #E8E3D8', color: '#8A8578' }}
                 >
-                    <h1 className='text-lg font-medium mb-2'>Live Preview</h1>
-                    <p className='text-sm text-zinc-500 mb-6' >This is how the chatbot will appear on your website</p>
-                     
-                     <div
-                     className=' rounded-xl border border-zinc-300 bg-white shadow-md overflow-hidden '
-                     >
-                        <div className=' flex items-center gap-2 px-4 h-9 bg-zinc-100 border-b border-zinc-200 '>
-                    <span className=' w-2.5 h-2.5 rounded-full bg-red-400 ' />
-                    <span  className=' w-2.5 h-2.5 rounded-full bg-yellow-400 ' />
-                    <span  className=' w-2.5 h-2.5 rounded-full bg-green-400 '/>
-                    <span className=' ml-4 text-xs text-zinc-500 ' >
-                     Your website
+                  yourwebsite.com
+                </div>
+              </div>
+
+              {/* Page body */}
+              <div className="relative h-80 sm:h-96 p-5 sm:p-6" style={{ color: '#C9C4B6' }}>
+                <div className="space-y-2">
+                  <div className="h-2.5 w-2/3 rounded" style={{ background: '#EFEBE1' }} />
+                  <div className="h-2.5 w-1/2 rounded" style={{ background: '#EFEBE1' }} />
+                  <div className="h-2.5 w-5/6 rounded" style={{ background: '#EFEBE1' }} />
+                </div>
+
+                {/* Chat panel */}
+                <div
+                  className="absolute bottom-20 sm:bottom-24 right-3 left-3 sm:left-auto sm:w-64 rounded-xl overflow-hidden shadow-lg"
+                  style={{ border: '1px solid #E8E3D8', background: '#fff' }}
+                >
+                  <div
+                    className="flex items-center justify-between px-3 py-2 text-xs font-medium"
+                    style={{ background: '#1C1B1A', color: '#F4F1EA' }}
+                  >
+                    <span className="flex items-center gap-1.5">
+                      <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: '#5FAE7F' }} />
+                      Customer support
                     </span>
+                    <span className="opacity-60 cursor-pointer">✕</span>
+                  </div>
+                  <div className="p-3 space-y-2" style={{ background: '#FAF8F3' }}>
+                    <div
+                      className="text-xs px-3 py-2 rounded-lg w-fit max-w-[85%]"
+                      style={{ background: '#EAF3EC', color: '#1C1B1A' }}
+                    >
+                      Hi! How can I help you today?
                     </div>
-                    <div className='relative h-64 sm:h-72 p-6 text-zinc-400 text-sm ' >
-                        
-                    Your website goes here    
-                       
-                  <div className=' absolute bottom-24 right-6 w-64 bg-white rounded-xl shadow-xl border border-zinc-200 overflow-hidden ' >
-                    <div className=' bg-black text-white text-xs px-3 py-2 flex justify-between items-center ' > 
-                        <span> Customer Support </span>
-                        <span> x </span>
+                    <div
+                      className="text-xs px-3 py-2 rounded-lg ml-auto w-fit max-w-[85%]"
+                      style={{ background: '#1C1B1A', color: '#F4F1EA' }}
+                    >
+                      What&apos;s your return policy?
                     </div>
-                    <div className=' p-3 space-y-2 bg-zinc-50 '>
-                     <div className=' bg-zinc-200 text-zinc-800 text-xs px-3 py-2 rounded-lg w-fit '> hi! how can I help you ? </div>
-                     <div className=' bg-black text-white text-xs px-3 py-2 rounded-lg ml-auto w-fit '> what is the return policy ?  </div>
+                    {/* typing indicator */}
+                    <div
+                      className="flex items-center gap-1 px-3 py-2.5 rounded-lg w-fit"
+                      style={{ background: '#EAF3EC' }}
+                    >
+                      {[0, 1, 2].map((i) => (
+                        <span
+                          key={i}
+                          className="w-1.5 h-1.5 rounded-full animate-bounce"
+                          style={{ background: '#2D6A4F', animationDelay: `${i * 0.15}s` }}
+                        />
+                      ))}
                     </div>
                   </div>
-                    <motion.div
-                       animate = {{ y: [0 , -8 , 0] }}
-                       transition={{ repeat : Infinity , duration:3 }}
-                       className=' absolute bottom-6 right-6 w-14 h-14 rounded-full bg-black text-white flex items-center justify-center shadow-2xl cursor-pointer '
-                     > 🗨️ </motion.div>
-                    </div>
-                     </div>
                 </div>
 
-            </motion.div>
-           </div>
+                {/* Launcher */}
+                <motion.div
+                  animate={{ y: [0, -6, 0] }}
+                  transition={{ repeat: Infinity, duration: 3, ease: 'easeInOut' }}
+                  className="absolute bottom-4 sm:bottom-6 right-4 sm:right-6 w-12 h-12 sm:w-14 sm:h-14 rounded-full flex items-center justify-center shadow-lg cursor-pointer"
+                  style={{ background: '#1C1B1A' }}
+                >
+                  <span
+                    className="absolute -top-0.5 -right-0.5 w-3 h-3 rounded-full animate-pulse"
+                    style={{ background: '#5FAE7F', border: '2px solid #FAF8F3' }}
+                  />
+                  <span className="text-lg sm:text-xl" style={{ color: '#F4F1EA' }}>💬</span>
+                </motion.div>
+              </div>
+            </div>
+          </motion.div>
         </div>
-    )
+      </div>
+    </div>
+  )
 }
 
 export default EmbedClient
+

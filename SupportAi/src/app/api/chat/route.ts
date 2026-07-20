@@ -16,7 +16,7 @@ export async function POST(req: NextRequest) {
         const setting = await usermodel.findOne({ ownerId })
         if (!setting) {
             return NextResponse.json({
-                message: " chatboy is not configured yet "
+                message: " chatbot is not configured yet "
             }, { status: 400 })
         }
 

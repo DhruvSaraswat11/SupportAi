@@ -61,12 +61,26 @@ text
 (Provide the final customer-friendly response.)
 `
 
+//    const ai = new GoogleGenAI({
+//   apiKey: process.env.GEMINI_API!,
+// });
 
+// const result = await ai.models.generateContent({
+//   model: "gemini-2.5-flash",
+//   contents: prompt,
+// });
+
+// return NextResponse.json({
+//   answer: result.text,
+// });
+
+
+        
 
         const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API });
 
         const interaction = await ai.interactions.create({
-            model: "gemini-3.5-flash",
+            model: "gemini-2.5-flash",
             input: prompt,
         });
 

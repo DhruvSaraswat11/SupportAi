@@ -108,38 +108,11 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-import { GoogleGenAI } from "@google/genai";
 import { NextResponse } from "next/server";
 
 export async function GET() {
-  try {
-    const ai = new GoogleGenAI({
-      apiKey: process.env.GEMINI_API!,
-    });
-
-    const result = await ai.models.generateContent({
-      model: "gemini-2.5-flash",
-      contents: "Hello",
-    });
-
-    return NextResponse.json({
-      text: result.text,
-    });
-  } catch (err) {
-    console.error(err);
-
-    return NextResponse.json({
-      error: err instanceof Error ? err.message : String(err),
-    });
-  }
+  return NextResponse.json({
+    working: true,
+    time: Date.now(),
+  });
 }

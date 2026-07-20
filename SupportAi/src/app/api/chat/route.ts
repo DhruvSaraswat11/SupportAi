@@ -110,9 +110,8 @@
 
 import { NextResponse } from "next/server";
 
+throw new Error("ROUTE LOADED");
+
 export async function GET() {
-  return NextResponse.json({
-    working: true,
-    time: Date.now(),
-  });
+  return NextResponse.json({ ok: true });
 }

@@ -78,16 +78,17 @@ text
         return response
       
 
-    } catch (error) {
-        const response = NextResponse.json({
-            message: ` chat error ${error} `
-        }, { status: 500 })
+    }} catch (error) {
+    console.error("Chat API Error:", error);
 
-        response.headers.set("Access-Control-Allow-Origin", "*");
-        response.headers.set("Access-Control-Allow-Methods", "POST , OPTIONS");
-        response.headers.set("Access-Control-Allow-Headers", "Content-Type");
-        return response
-    }
+    return NextResponse.json(
+      {
+        message: error instanceof Error ? error.message : String(error),
+        stack: error instanceof Error ? error.stack : null,
+      },
+      { status: 500 }
+    );
+}
 }
 
 

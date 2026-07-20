@@ -167,14 +167,11 @@ align-items : center ;
             message : text
         } )
     } )
-    let data = await response.json() 
-    console.log( data )
-    if ( typeof data == "object" ) {
-        data = undefined
-    }
-    messageArea.removeChild(typing)
-    addMessage( data || " something went wrong " , " ai " )
+   const data = await response.json();
+console.log(data);
 
+    messageArea.removeChild(typing)
+addMessage(data.text || data.answer || data.message || "Something went wrong", "ai");
  } catch (error) {
     console.log( error )
  }

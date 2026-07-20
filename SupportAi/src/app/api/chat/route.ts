@@ -61,20 +61,6 @@ text
 (Provide the final customer-friendly response.)
 `
 
-//    const ai = new GoogleGenAI({
-//   apiKey: process.env.GEMINI_API!,
-// });
-
-// const result = await ai.models.generateContent({
-//   model: "gemini-2.5-flash",
-//   contents: prompt,
-// });
-
-// return NextResponse.json({
-//   answer: result.text,
-// });
-
-
         
 
         const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API });
@@ -92,7 +78,7 @@ text
         return response
       
 
-    }} catch (error) {
+    } catch (error) {
     console.error("Chat API Error:", error);
 
     return NextResponse.json(

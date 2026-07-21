@@ -56,10 +56,8 @@ text
 * If the question is unclear, ask for clarification instead of guessing.
 *Give answer in english only until the user will not request you
 ### Output Format
-
-**Answer:**
 (Provide the final customer-friendly response.)
-`
+
 
         
 

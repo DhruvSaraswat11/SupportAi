@@ -1,4 +1,3 @@
-
 // immediatly invoked function
 (function () {
 
@@ -10,6 +9,8 @@
         console.log(" ownerId is not found ")
         return
     }
+
+    let isDark = false
 
     // button.style ek normal object nahi hai. Ye browser ka special CSSStyleDeclaration object hai. JavaScript tumhe is object ko replace karne nahi deta, lekin iske andar ki properties modify karne deta hai.
     // button.style.backgroundColor = "black";
@@ -57,7 +58,7 @@
 
     })
 
-    box.innerHTML = `<div style = " 
+    box.innerHTML = `<div id="chat-header" style = " 
 background : #000 ;
 color : #fff ;
 padding : 12px 14px ;
@@ -67,7 +68,10 @@ justify-content : space-between ;
 align-items : center ;
 " >
 <span> Customer Support </span>
+<span>
+<span id = "chat-theme-toggle" style = " cursor:pointer ; font-size : 16px ; margin-right : 10px " > 🌙 </span>
 <span id = "chat-close" style = " cursor:pointer ; font-size : 18px " > x </span>
+</span>
 </div>
  <div id = "chatmessages" style = " flex:1 ; padding : 12px ;
  overflow-y: auto ;
@@ -76,7 +80,7 @@ align-items : center ;
  flex-direction : column ; ">
  </div>
 
- <div style = " 
+ <div id = "chat-input-row" style = " 
  display:flex ;
  border-top : 1px solid #e5e7eb ;
  padding : 8px ;
@@ -110,14 +114,93 @@ align-items : center ;
           box.style. display = "none"
     } 
 
+    const theme = {
+        light: {
+            bg: "#fff",
+            headerBg: "#000",
+            headerText: "#fff",
+            messageAreaBg: "#f9fafb",
+            aiBubbleBg: "#e5e7eb",
+            aiBubbleText: "#111",
+            userBubbleBg: "#000",
+            userBubbleText: "#fff",
+            inputBg: "#fff",
+            inputBorder: "#d1d5db",
+            inputText: "#111",
+            sendBg: "#000",
+            sendText: "#fff",
+            launcherBg: "#000",
+            launcherText: "#fff"
+        },
+        dark: {
+            bg: "#1e1e1e",
+            headerBg: "#111",
+            headerText: "#fff",
+            messageAreaBg: "#181818",
+            aiBubbleBg: "#333",
+            aiBubbleText: "#eee",
+            userBubbleBg: "#fff",
+            userBubbleText: "#000",
+            inputBg: "#2a2a2a",
+            inputBorder: "#444",
+            inputText: "#eee",
+            sendBg: "#fff",
+            sendText: "#000",
+            launcherBg: "#fff",
+            launcherText: "#000"
+        }
+    }
 
+    const header = document.querySelector("#chat-header")
+    const inputRow = document.querySelector("#chat-input-row")
+    const themeToggle = document.querySelector("#chat-theme-toggle")
     const input = document.querySelector("#chat-input")
     const senDButton = document.querySelector("#chat-send")
     const messageArea = document.querySelector("#chatmessages")
 
+    function applyTheme() {
+        const t = isDark ? theme.dark : theme.light
+
+        box.style.background = t.bg
+        header.style.background = t.headerBg
+        header.style.color = t.headerText
+        messageArea.style.background = t.messageAreaBg
+        inputRow.style.borderTop = `1px solid ${isDark ? "#333" : "#e5e7eb"}`
+
+        input.style.background = t.inputBg
+        input.style.border = `1px solid ${t.inputBorder}`
+        input.style.color = t.inputText
+
+        senDButton.style.background = t.sendBg
+        senDButton.style.color = t.sendText
+
+        button.style.background = t.launcherBg
+        button.style.color = t.launcherText
+
+        themeToggle.innerHTML = isDark ? "☀️" : "🌙"
+
+        // re-color existing bubbles when theme switches
+        Array.from(messageArea.children).forEach((bubble) => {
+            if (bubble.dataset.from === "user") {
+                bubble.style.background = t.userBubbleBg
+                bubble.style.color = t.userBubbleText
+            } else if (bubble.dataset.from === "ai") {
+                bubble.style.background = t.aiBubbleBg
+                bubble.style.color = t.aiBubbleText
+            }
+        })
+    }
+
+    themeToggle.onclick = () => {
+        isDark = !isDark
+        applyTheme()
+    }
+
   function addMessage ( text , from ) {
+    const t = isDark ? theme.dark : theme.light
     const bubble  = document.createElement('div')
     bubble. innerHTML =  text 
+    bubble.dataset.from = from
     Object. assign(bubble.style , {
         maxWidth : "78%" ,
         padding : "8px 12px" ,
@@ -126,8 +209,8 @@ align-items : center ;
         lineHeight : "1.4" ,
         marginBottom : "8px" ,
         alignSelf : from === "user" ? "flex-end" : "flex-start" ,
-        background : from === "user" ? "#000" : "#e5e7eb" ,
-        color : from === "user" ? "#fff" : "#111" ,
+        background : from === "user" ? t.userBubbleBg : t.aiBubbleBg ,
+        color : from === "user" ? t.userBubbleText : t.aiBubbleText ,
 
         borderTopRightRadius : from === "user" ? " 4px " : " 14px " ,
        borderTopLeftRadius : from === "user" ? " 14px " : " 4px " ,
@@ -150,7 +233,7 @@ align-items : center ;
     typing.innerHTML  = "Typing..."
     Object. assign (typing.style , {
         fontSize : "12px" ,
-        color : "#6b7280" ,
+        color : isDark ? "#9ca3af" : "#6b7280" ,
         marginBottom : "8px" ,
         alignSelf : "flex-start" 
     } )
@@ -182,7 +265,6 @@ addMessage( data ||  "Something went wrong", "ai");
 
 
 })()
-
 
 
 

@@ -76,17 +76,22 @@ text
         return response
       
 
-    } catch (error) {
-    console.error("Chat API Error:", error);
+    } const corsHeaders = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Methods": "POST, OPTIONS",
+  "Access-Control-Allow-Headers": "Content-Type",
+};
 
-    return NextResponse.json(
-      {
-        message: error instanceof Error ? error.message : String(error),
-        stack: error instanceof Error ? error.stack : null,
-      },
-      { status: 500 }
-    );
-}
+return NextResponse.json(
+  {
+    message: error instanceof Error ? error.message : String(error),
+  },
+  {
+    status: 500,
+    headers: corsHeaders,
+  }
+);
+    
 }
 
 

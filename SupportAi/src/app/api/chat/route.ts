@@ -66,7 +66,7 @@ text
         const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API });
 
         const interaction = await ai.interactions.create({
-            model: "gemini-2.5-flash",
+            model: "gemini-3.5-flash",
             input: prompt,
         });
 

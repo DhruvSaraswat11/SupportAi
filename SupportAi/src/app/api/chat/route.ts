@@ -3,6 +3,12 @@ import { NextRequest, NextResponse } from "next/server";
 import { GoogleGenAI } from "@google/genai";
 import { connectDb } from "@/lib/Db";
 
+const corsHeaders = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Methods": "POST, OPTIONS",
+  "Access-Control-Allow-Headers": "Content-Type",
+};
+
 export async function POST(req: NextRequest) {
     try {
         const { message, ownerId } = await req.json()
@@ -10,7 +16,8 @@ export async function POST(req: NextRequest) {
         if (!message || !ownerId) {
             return NextResponse.json({
                 message: " message and ownerId is required "
-            }, { status: 400 })
+            }, { status: 400 , 
+                headers: corsHeaders  })
         }
         await connectDb()
         const setting = await usermodel.findOne({ ownerId })
@@ -75,30 +82,29 @@ text
 
         return response
       
+    } 
+      catch (error) {
+    console.error(error);
 
-    } const corsHeaders = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Methods": "POST, OPTIONS",
-  "Access-Control-Allow-Headers": "Content-Type",
-};
-
-return NextResponse.json(
-  {
-    message: error instanceof Error ? error.message : String(error),
-  },
-  {
-    status: 500,
-    headers: corsHeaders,
+    return NextResponse.json(
+      {
+        message: error instanceof Error ? error.message : String(error),
+      },
+      {
+        status: 500,
+        headers: corsHeaders,
+      }
+    );
   }
-);
-    
 }
+
 
 
 
 export async function OPTIONS() {
   const response = new NextResponse(null, {
     status: 204,
+    headers: corsHeaders,
   });
 
   response.headers.set("Access-Control-Allow-Origin", "*");

@@ -169,9 +169,11 @@ align-items : center ;
     } )
    const data = await response.json();
 console.log(data);
-
+      if ( typeof data == "Object" ) {
+        data = undefined ;
+      }     
     messageArea.removeChild(typing)
-addMessage(data.text || data.answer || data.message || "Something went wrong", "ai");
+addMessage( data ||  "Something went wrong", "ai");
  } catch (error) {
     console.log( error )
  }

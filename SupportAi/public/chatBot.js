@@ -169,9 +169,9 @@ align-items : center ;
     } )
    const data = await response.json();
 console.log(data);
-      if ( typeof data == "Object" ) {
-        data = undefined ;
-      }     
+      // if ( typeof data == "Object" ) {
+      //   data = undefined ;
+      // }     
     messageArea.removeChild(typing)
 addMessage( data ||  "Something went wrong", "ai");
  } catch (error) {

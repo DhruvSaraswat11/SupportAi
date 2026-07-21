@@ -251,7 +251,7 @@ align-items : center ;
         } )
     } )
    const data = await response.json();
-// console.log(data);
+console.log(data);
       // if ( typeof data == "Object" ) {
       //   data = undefined ;
       // }     

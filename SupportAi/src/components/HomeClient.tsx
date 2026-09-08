@@ -146,9 +146,15 @@ const HomeClient = ({ email }: { email: string | undefined }) => {
 
       <section className=' bg-zinc-50 py-28 px-6 border-t border-zinc-200 '>
         <div id='scroll' className=' max-w-6xl mx-auto'>
-         <h2 className='text-3xl font-semibold text-center'>
+<motion.h2
+  className='text-3xl font-semibold text-center'
+  initial={{ opacity: 0, y: 20 }}
+  transition={{ duration: 0.5 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  viewport={{ once: false }}
+>
   Why Businesses Choose SupportAi
-</h2>
+</motion.h2>
 
           <div className=' mt-16 grid grid-cols-1 md:grid-cols-3 gap-11 '>
 

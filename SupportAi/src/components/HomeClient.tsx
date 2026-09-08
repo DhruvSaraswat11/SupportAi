@@ -4,10 +4,16 @@ import { AnimatePresence, motion } from 'motion/react'
 import axios from 'axios'
 import { useRouter } from "next/navigation"; 
 
-const HomeClient = ({ email }: { email: string | undefined }) => {
+const HomeClient = () => {
   const [loading , setLoading] = useState( false ) ;
-  // console.log(email) 
-  email = email ? email?.toUpperCase()[0] : undefined
+  const [email, setEmail] = useState<string | undefined>(undefined)
+  useEffect(() => {
+    axios.get("/api/auth/me")
+      .then(res => {
+        if (res.data?.email) setEmail(res.data.email.toUpperCase()[0])
+      })
+      .catch(() => {})
+  }, [])
   const hAndleLogin = () => {
     setLoading( true )
     // wAy 1

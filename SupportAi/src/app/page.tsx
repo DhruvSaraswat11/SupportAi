@@ -1,9 +1,11 @@
+import getSession from "@/lib/getSession";
 import HomeClient from "../components/HomeClient";
 
-export default function Home() {
+export default async function Home() {
+ const session = await getSession()  
   return (
-    <>
-      <HomeClient />
-    </>
+   <>
+    <HomeClient email = { session?.user?.email  } />
+   </>
   );
 }
